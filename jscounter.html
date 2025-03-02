@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click-Based Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #counterBox {
+            display: inline-block;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        #count {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            display: block;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #increment { background-color: #4CAF50; color: white; }
+        #decrement { background-color: #f44336; color: white; }
+        #reset { background-color: #008CBA; color: white; }
+    </style>
+</head>
+<body>
+
+    <h2>Click Left to Decrement | Click Right to Increment</h2>
+    <div id="counterBox">
+        <span id="count">0</span>
+        <br>
+        <button id="increment" onclick="increase(event)">Increment</button>
+        <button id="decrement" onclick="decrease(event)">Decrement</button>
+        <button id="reset" onclick="resetCounter(event)">Reset</button>
+    </div>
+
+    <script>
+        let count = 0;
+
+        function updateDisplay() {
+            document.getElementById("count").innerText = count;
+        }
+
+        function increase(event) {
+            event.stopPropagation(); // Prevents body click event
+            count++;
+            updateDisplay();
+        }
+
+        function decrease(event) {
+            event.stopPropagation(); // Prevents body click event
+            if (count > 0) count--;
+            updateDisplay();
+        }
+
+        function resetCounter(event) {
+            event.stopPropagation(); // Prevents body click event
+            count = 0;
+            updateDisplay();
+        }
+
+        document.body.addEventListener("click", function(event) {
+            let halfScreenWidth = window.innerWidth / 2;
+            if (event.target.tagName === "BUTTON") return; // Prevents body click event for buttons
+            
+            if (event.clientX < halfScreenWidth) {
+                if (count > 0) count--;
+            } else {
+                count++;
+            }
+            updateDisplay();
+        });
+    </script>
+
+</body>
+</html>
